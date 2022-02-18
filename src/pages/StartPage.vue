@@ -1,4 +1,17 @@
-<script></script>
+<script setup lang="ts">
+import router from '../router';
+import { useStore } from '../store';
+
+const store = useStore();
+
+function onButtonClicked() {
+	const inputElement: HTMLInputElement | null = document.querySelector('#username');
+
+	// Setting username in state, redirecting user to questions
+	store.commit('setUsername', inputElement?.value);
+	router.push('/questions');
+}
+</script>
 
 <template>
 	<section class="flex flex-col items-center">
@@ -11,6 +24,7 @@
 			id="username"
 		/>
 		<button
+			@click="onButtonClicked()"
 			class="bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-sm transition-colors py-2 px-4 mt-4"
 		>
 			Choose name

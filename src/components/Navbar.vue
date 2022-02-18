@@ -4,7 +4,7 @@
 	<nav>
 		<ul>
 			<li>
-				<router-link class="text-blue-500 underline" to="/">Go to Home</router-link>
+				<router-link class="text-blue-500 underline" to="/">Go to Start</router-link>
 			</li>
 			<li>
 				<router-link class="text-blue-500 underline" to="/questions"
