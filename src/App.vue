@@ -3,8 +3,10 @@ import Navbar from './components/Navbar.vue';
 </script>
 
 <template>
-	<Navbar />
-	<router-view />
+	<main class="flex flex-wrap justify-center text-gray-100">
+		<Navbar />
+		<router-view />
+	</main>
 </template>
 
 <style></style>
