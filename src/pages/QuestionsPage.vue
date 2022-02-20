@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { FormattedQuestion, ResponseQuestion } from '../interfaces/questions';
+import { FormattedQuestion } from '../interfaces/questions';
 import getQuestions from '../api/questions';
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, ref, reactive } from 'vue';
 import { useStore } from '../store';
 import router from '../router';
+import ErrorMessage from '../components/ErrorMessage.vue';
 
 const store = useStore();
 
 const username = computed(() => store.state.username);
 const questions = computed(() => store.state.questions);
-const allAnswersPicked = true;
+const allAnswersPicked = false;
+const picked = reactive([]);
 
 onMounted(async () => {
 	// If user has not chosen an username, redirect to home
@@ -30,12 +32,17 @@ function onSubmitQuestionsClick() {
 <template>
 	<section>
 		<h1 class="text-4xl">Questions Page</h1>
-		<div class="mt-4 max-w-lg" v-for="question in questions" :key="question.question">
-			<h2 class="text-lg font-semibold">{{ question.question }}</h2>
-			<ul>
-				<li v-for="answer in question.answers">{{ answer }}</li>
-			</ul>
-			<p class="text-green-700">Correct answer: {{ question.correct_answer }}</p>
+		<div
+			class="mt-4 max-w-lg"
+			v-for="({ question, answers, correct_answer }, idx) in questions"
+			:key="question"
+		>
+			<h2 class="text-lg font-semibold">{{ question }}</h2>
+			<div v-for="answer in answers">
+				<input type="radio" id="question-{{idx}}" value="{{answer}}" v-model="picked" />
+				<label for="question-{{idx}}">{{ answer }}</label>
+			</div>
+			<p class="text-green-700">Correct answer: {{ correct_answer }}</p>
 		</div>
 		<button
 			@click="onSubmitQuestionsClick()"
@@ -43,5 +50,6 @@ function onSubmitQuestionsClick() {
 		>
 			Submit
 		</button>
+		<ErrorMessage />
 	</section>
 </template>

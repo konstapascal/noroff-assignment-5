@@ -1,5 +1,6 @@
 import { InjectionKey } from 'vue';
-import { createStore, useStore as baseUseStore, Store } from 'vuex';
+import { useStore as baseUseStore, createStore, Store } from 'vuex';
+
 import { FormattedQuestion } from './interfaces/questions';
 
 export interface State {
