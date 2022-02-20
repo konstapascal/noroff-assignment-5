@@ -1,13 +1,23 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import router from '../router';
+import { computed, onMounted, ref } from 'vue';
 import { useStore } from '../store';
+import router from '../router';
 
 const store = useStore();
 const username = ref('');
+const storeUsername = computed(() => store.state.username);
 
-const onUsernameChange = () => store.commit('setUsername', username.value);
-const onButtonClick = () => router.push('/questions');
+onMounted(() => {
+	// If user has set his username from before, reset it
+	// This can be the case when user is redirected back here
+	if (storeUsername.value) store.commit('setUsername', '');
+});
+
+const onButtonClick = () => {
+	// Set the username in state and redirect to questions
+	store.commit('setUsername', username.value);
+	router.push('/questions');
+};
 </script>
 
 <template>
@@ -15,8 +25,7 @@ const onButtonClick = () => router.push('/questions');
 		<h1 class="text-4xl">Start Page</h1>
 		<label for="username">Choose your username</label>
 		<input
-			v-model="username"
-			@input="onUsernameChange()"
+			v-model.trim="username"
 			class="border-2 block px-2 py-1 mt-4 text-gray-900 rounded-sm"
 			type="text"
 			name="username"
@@ -26,7 +35,7 @@ const onButtonClick = () => router.push('/questions');
 			@click="onButtonClick()"
 			class="bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-sm transition-colors py-2 px-4 mt-4"
 		>
-			Choose name
+			Play now
 		</button>
 	</section>
 </template>

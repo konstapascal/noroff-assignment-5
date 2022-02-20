@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import Navbar from './components/Navbar.vue';
+// import Navbar from './components/Navbar.vue';
 </script>
 
 <template>
 	<main class="flex flex-wrap justify-center text-gray-100">
-		<Navbar />
+		<!-- <Navbar /> -->
 		<router-view />
 	</main>
 </template>
