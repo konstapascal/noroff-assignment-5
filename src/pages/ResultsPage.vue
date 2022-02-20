@@ -4,8 +4,11 @@ import { useStore } from '../store';
 import router from '../router';
 
 const store = useStore();
+
 const username = computed(() => store.state.username);
 const userScore = computed(() => store.getters.userScore);
+const questions = computed(() => store.state.questions);
+const userAnswers = computed(() => store.state.userAnswers);
 
 onMounted(() => {
 	// If user has not chosen username
@@ -17,7 +20,19 @@ onMounted(() => {
 	<section>
 		<h1 class="text-4xl">Results page</h1>
 		<p class="text-lg">Username: {{ username }}</p>
-		<p class="text-lg">Points: {{ userScore }}/100</p>
+		<p class="text-lg">Score: {{ userScore }}/100</p>
+
+		<div v-for="({ question, correct_answer }, idx) in questions" class="mt-4">
+			<p class="font-semibold">{{ question }}</p>
+			<p class="text-sm">Correct answer: {{ correct_answer }}</p>
+			<p
+				class="text-sm"
+				:class="[correct_answer === userAnswers[idx] ? 'text-green-400' : 'text-red-400']"
+			>
+				User answer: {{ userAnswers[idx] }}
+			</p>
+		</div>
+
 		<div class="">
 			<button
 				@click="router.push('/questions')"

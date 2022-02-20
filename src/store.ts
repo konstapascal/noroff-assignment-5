@@ -6,7 +6,7 @@ import { FormattedQuestion } from './interfaces/questions';
 export interface State {
 	username: string;
 	questions: FormattedQuestion[];
-	userAnswers: (string | boolean)[];
+	userAnswers: string[];
 }
 
 export const key: InjectionKey<Store<State>> = Symbol();
@@ -24,7 +24,7 @@ export default createStore({
 		setQuestions: (state: State, payload: FormattedQuestion[]) => {
 			state.questions = payload;
 		},
-		setUserAnswers: (state: State, payload: (string | boolean)[]) => {
+		setUserAnswers: (state: State, payload: string[]) => {
 			state.userAnswers = payload;
 		}
 	},
