@@ -1,17 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { useStore } from '../store';
 import router from '../router';
 
 const store = useStore();
 const username = ref('');
-const storeUsername = computed(() => store.state.username);
-
-onMounted(() => {
-	// If user has set his username from before, reset it
-	// This can be the case when user is redirected back here
-	if (storeUsername.value) store.commit('setUsername', '');
-});
 
 const onButtonClick = () => {
 	// Set the username in state and redirect to questions
