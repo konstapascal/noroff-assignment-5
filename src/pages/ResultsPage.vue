@@ -11,9 +11,9 @@ const userScore = computed(() => store.getters.userScore);
 const questions = computed(() => store.state.questions);
 const userAnswers = computed(() => store.state.userAnswers);
 
-const newScore = ref(false);
-const newHighScore = ref(false);
-const keepOldScore = ref(false);
+const hasNewScore = ref(false);
+const hasNewHighScore = ref(false);
+const keepsOldScore = ref(false);
 
 onMounted(async () => {
 	// If user has not chosen username
@@ -25,16 +25,16 @@ onMounted(async () => {
 		// If user doesn't exist, create a new one with the score
 		if (!user) {
 			postUser(username.value, userScore.value);
-			newScore.value = true;
+			hasNewScore.value = true;
 			return;
 		}
 		// Check if score is higher than saved score, then update it
 		if (userScore.value > user.score) {
 			patchUser(user.id, userScore.value);
-			newHighScore.value = true;
+			hasNewHighScore.value = true;
 		}
 
-		keepOldScore.value = true;
+		keepsOldScore.value = true;
 	} catch (error) {
 		console.log(error);
 	}
@@ -45,9 +45,19 @@ onMounted(async () => {
 	<section class="container mx-auto flex flex-col items-center">
 		<h1 class="text-4xl">Results page</h1>
 		<div class="max-w-md">
-			<div class="flex flex-col mt-2 items-center">
+			<div class="flex flex-col mt-4 items-center">
 				<p class="text-lg">Username: {{ username }}</p>
 				<p class="text-lg">Score: {{ userScore }}/100</p>
+			</div>
+
+			<div class="text-sm text-center mt-2 text-yellow-400" v-if="hasNewScore">
+				Added a new user to the database with the score of {{ userScore }}.
+			</div>
+			<div class="text-sm text-center mt-2 text-yellow-400" v-if="hasNewHighScore">
+				You have a new highscore! Updated database score to {{ userScore }}.
+			</div>
+			<div class="text-sm text-center mt-2 text-yellow-400" v-if="keepsOldScore">
+				You did not earn more than your highest score, score not updated!
 			</div>
 
 			<div v-for="({ question, correct_answer }, idx) in questions" class="mt-6">
