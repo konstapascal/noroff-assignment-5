@@ -30,18 +30,24 @@ function onSubmitQuestionsClick() {
 	store.commit('setUserAnswers', pickedAnswers);
 	router.push('/results');
 }
+
+function decodeHtmlEntities(str: string) {
+	let parser = new DOMParser().parseFromString(str, 'text/html');
+	return parser.documentElement.textContent;
+}
 </script>
 
 <template>
 	<section class="container mx-auto my-14 flex flex-col items-center">
 		<h1 class="text-4xl">Questions Page</h1>
+		<p class="text-lg mt-4">Username: {{ username }}</p>
 		<div class="max-w-md">
 			<div
 				class="mt-8 text-center"
 				v-for="({ question, answers }, idx) in questions"
 				:key="question"
 			>
-				<h2 class="text-lg font-semibold">{{ question }}</h2>
+				<p class="text-lg font-semibold">{{ decodeHtmlEntities(question) }}</p>
 				<div class="mt-6">
 					<div class="" v-for="answer in answers">
 						<input
@@ -55,7 +61,7 @@ function onSubmitQuestionsClick() {
 						<label
 							class="block bg-gray-700 mt-2 py-2 peer-checked:bg-yellow-600 hover:cursor-pointer transition-colors"
 							:for="answer"
-							>{{ answer }}</label
+							>{{ decodeHtmlEntities(answer) }}</label
 						>
 					</div>
 				</div>
