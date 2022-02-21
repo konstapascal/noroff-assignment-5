@@ -13,7 +13,8 @@ let allAnswersPicked = ref(false);
 const picked = reactive([]);
 
 function onAnswerChange() {
-	if (picked.length === 10) allAnswersPicked.value = true;
+	// If picked answers count is the same as the number of questions
+	if (picked.length === questions.value.length) allAnswersPicked.value = true;
 }
 
 onMounted(async () => {
@@ -32,28 +33,31 @@ function onSubmitQuestionsClick() {
 </script>
 
 <template>
-	<section>
+	<section class="container mx-auto flex flex-col items-center">
 		<h1 class="text-4xl">Questions Page</h1>
-		<div class="mt-4 max-w-lg" v-for="({ question, answers }, idx) in questions" :key="question">
-			<h2 class="text-lg font-semibold">{{ question }}</h2>
-			<div v-for="answer in answers">
-				<input
-					type="radio"
-					:id="answer"
-					:value="answer"
-					v-model="picked[idx]"
-					@change="onAnswerChange()"
-				/>
-				<label :for="answer">{{ answer }}</label>
+		<div class="max-w-md">
+			<div class="mt-6" v-for="({ question, answers }, idx) in questions" :key="question">
+				<h2 class="text-lg font-semibold">{{ question }}</h2>
+				<div v-for="answer in answers">
+					<input
+						type="radio"
+						:id="answer"
+						:value="answer"
+						v-model="picked[idx]"
+						@change="onAnswerChange()"
+					/>
+					<label :for="answer">{{ answer }}</label>
+				</div>
+			</div>
+			<div class="flex justify-center">
+				<button
+					v-if="allAnswersPicked"
+					@click="onSubmitQuestionsClick()"
+					class="bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-sm transition-colors py-2 px-4 mt-4"
+				>
+					Submit
+				</button>
 			</div>
 		</div>
-		<button
-			v-if="allAnswersPicked"
-			@click="onSubmitQuestionsClick()"
-			class="bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-sm transition-colors py-2 px-4 mt-4"
-		>
-			Submit
-		</button>
-		<ErrorMessage />
 	</section>
 </template>

@@ -3,8 +3,7 @@
 </script>
 
 <template>
-	<main class="flex flex-wrap justify-center text-gray-100">
-		<!-- <Navbar /> -->
+	<main class="text-gray-100">
 		<router-view />
 	</main>
 </template>
