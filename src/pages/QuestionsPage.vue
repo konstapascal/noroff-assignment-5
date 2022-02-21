@@ -4,6 +4,7 @@ import getQuestions from '../api/questions';
 import { onMounted, computed, ref, reactive } from 'vue';
 import { useStore } from '../store';
 import router from '../router';
+import decodeHtmlEntities from '../util/decodeHtmlEntities';
 
 const store = useStore();
 
@@ -14,7 +15,9 @@ const pickedAnswers = reactive([]);
 
 function onAnswerChange() {
 	// If picked answers count is the same as the number of questions
-	if (pickedAnswers.length === questions.value.length) allAnswersPicked.value = true;
+	// Filtering undefined entries, can occur when picking answers out of order
+	const actualAnswers = pickedAnswers.filter(answer => answer !== undefined);
+	if (actualAnswers.length === questions.value.length) allAnswersPicked.value = true;
 }
 
 onMounted(async () => {
@@ -30,26 +33,23 @@ function onSubmitQuestionsClick() {
 	store.commit('setUserAnswers', pickedAnswers);
 	router.push('/results');
 }
-
-function decodeHtmlEntities(str: string) {
-	let parser = new DOMParser().parseFromString(str, 'text/html');
-	return parser.documentElement.textContent;
-}
 </script>
 
 <template>
-	<section class="container mx-auto my-14 flex flex-col items-center">
-		<h1 class="text-4xl">Questions Page</h1>
-		<p class="text-lg mt-4">Username: {{ username }}</p>
+	<section class="container mx-auto my-20 flex flex-col items-center">
+		<h1 class="text-4xl font-bold">Questions</h1>
+		<p class="text-md mt-2 text-blue-400 italic">
+			Playing as <span class="font-semibold not-italic">{{ username }}</span>
+		</p>
 		<div class="max-w-md">
 			<div
 				class="mt-8 text-center"
 				v-for="({ question, answers }, idx) in questions"
 				:key="question"
 			>
-				<p class="text-lg font-semibold">{{ decodeHtmlEntities(question) }}</p>
-				<div class="mt-6">
-					<div class="" v-for="answer in answers">
+				<p class="text-lg text-blue-100 font-semibold">{{ decodeHtmlEntities(question) }}</p>
+				<div class="mt-3">
+					<div class="mt-2" v-for="answer in answers">
 						<input
 							class="peer hidden"
 							type="radio"
@@ -59,7 +59,7 @@ function decodeHtmlEntities(str: string) {
 							@change="onAnswerChange()"
 						/>
 						<label
-							class="block bg-gray-700 mt-2 py-2 peer-checked:bg-yellow-600 hover:cursor-pointer transition-colors"
+							class="block bg-gray-700 border-2 rounded-sm border-gray-600 py-2 peer-checked:bg-blue-600 peer-checked:border-blue-500 hover:cursor-pointer transition-colors"
 							:for="answer"
 							>{{ decodeHtmlEntities(answer) }}</label
 						>
