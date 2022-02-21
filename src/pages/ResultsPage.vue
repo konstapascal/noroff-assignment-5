@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useStore } from '../store';
 import router from '../router';
+import { getUser, postUser, patchUser } from '../api/users';
 
 const store = useStore();
 
@@ -10,9 +11,33 @@ const userScore = computed(() => store.getters.userScore);
 const questions = computed(() => store.state.questions);
 const userAnswers = computed(() => store.state.userAnswers);
 
-onMounted(() => {
+const newScore = ref(false);
+const newHighScore = ref(false);
+const keepOldScore = ref(false);
+
+onMounted(async () => {
 	// If user has not chosen username
 	if (!username.value) return router.push('/');
+
+	try {
+		const user = await getUser(username.value);
+
+		// If user doesn't exist, create a new one with the score
+		if (!user) {
+			postUser(username.value, userScore.value);
+			newScore.value = true;
+			return;
+		}
+		// Check if score is higher than saved score, then update it
+		if (userScore.value > user.score) {
+			patchUser(user.id, userScore.value);
+			newHighScore.value = true;
+		}
+
+		keepOldScore.value = true;
+	} catch (error) {
+		console.log(error);
+	}
 });
 </script>
 

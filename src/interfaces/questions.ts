@@ -1,9 +1,9 @@
 export interface QuestionsResponse {
 	response_code: number;
-	results: ResponseQuestion[];
+	results: Question[];
 }
 
-export interface ResponseQuestion {
+export interface Question {
 	category: string;
 	type: string;
 	difficulty: string;

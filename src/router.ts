@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
-import StartPage from './pages/StartPage.vue';
-import ResultsPage from './pages/ResultsPage.vue';
-import QuestionsPage from './pages/QuestionsPage.vue';
 import NotFoundPage from './pages/NotFoundPage.vue';
+import QuestionsPage from './pages/QuestionsPage.vue';
+import ResultsPage from './pages/ResultsPage.vue';
+import StartPage from './pages/StartPage.vue';
 
 const routes: RouteRecordRaw[] = [
 	{

@@ -10,11 +10,11 @@ const store = useStore();
 const username = computed(() => store.state.username);
 const questions = computed(() => store.state.questions);
 let allAnswersPicked = ref(false);
-const picked = reactive([]);
+const pickedAnswers = reactive([]);
 
 function onAnswerChange() {
 	// If picked answers count is the same as the number of questions
-	if (picked.length === questions.value.length) allAnswersPicked.value = true;
+	if (pickedAnswers.length === questions.value.length) allAnswersPicked.value = true;
 }
 
 onMounted(async () => {
@@ -27,7 +27,7 @@ onMounted(async () => {
 
 function onSubmitQuestionsClick() {
 	// Store user answers to store, redirect to /results
-	store.commit('setUserAnswers', picked);
+	store.commit('setUserAnswers', pickedAnswers);
 	router.push('/results');
 }
 </script>
@@ -43,7 +43,7 @@ function onSubmitQuestionsClick() {
 						type="radio"
 						:id="answer"
 						:value="answer"
-						v-model="picked[idx]"
+						v-model="pickedAnswers[idx]"
 						@change="onAnswerChange()"
 					/>
 					<label :for="answer">{{ answer }}</label>
