@@ -1,24 +1,16 @@
 <script setup lang="ts">
 import { FormattedQuestion } from '../interfaces/questions';
 import getQuestions from '../api/questions';
-import { onMounted, computed, ref, reactive } from 'vue';
+import { onMounted, computed } from 'vue';
 import { useStore } from '../store';
 import router from '../router';
-import decodeHtmlEntities from '../util/decodeHtmlEntities';
+import Question from '../components/Question.vue';
 
 const store = useStore();
 
 const username = computed(() => store.state.username);
 const questions = computed(() => store.state.questions);
-let allAnswersPicked = ref(false);
-const pickedAnswers = reactive([]);
-
-function onAnswerChange() {
-	// If picked answers count is the same as the number of questions
-	// Filtering undefined entries, can occur when picking answers out of order
-	const actualAnswers = pickedAnswers.filter(answer => answer !== undefined);
-	if (actualAnswers.length === questions.value.length) allAnswersPicked.value = true;
-}
+const allAnswersPicked = computed(() => store.state.allAnswersPicked);
 
 onMounted(async () => {
 	// If user has not chosen an username, redirect to /
@@ -30,7 +22,6 @@ onMounted(async () => {
 
 function onSubmitQuestionsClick() {
 	// Store user answers to store, redirect to /results
-	store.commit('setUserAnswers', pickedAnswers);
 	router.push('/results');
 }
 </script>
@@ -42,29 +33,8 @@ function onSubmitQuestionsClick() {
 			Playing as <span class="font-semibold not-italic">{{ username }}</span>
 		</p>
 		<div class="max-w-md">
-			<div
-				class="mt-8 text-center"
-				v-for="({ question, answers }, idx) in questions"
-				:key="question"
-			>
-				<p class="text-lg text-blue-100 font-semibold">{{ decodeHtmlEntities(question) }}</p>
-				<div class="mt-3">
-					<div class="mt-2" v-for="answer in answers">
-						<input
-							class="peer hidden"
-							type="radio"
-							:id="answer"
-							:value="answer"
-							v-model="pickedAnswers[idx]"
-							@change="onAnswerChange()"
-						/>
-						<label
-							class="block bg-gray-700 border-2 rounded-sm border-gray-600 py-2 peer-checked:bg-blue-600 peer-checked:border-blue-500 hover:cursor-pointer transition-colors"
-							:for="answer"
-							>{{ decodeHtmlEntities(answer) }}</label
-						>
-					</div>
-				</div>
+			<div class="mt-8 text-center" v-for="({ question, answers }, idx) in questions" :key="idx">
+				<Question :question="question" :questionIdx="idx" :answers="answers" />
 			</div>
 			<div class="flex justify-center mt-12">
 				<button
