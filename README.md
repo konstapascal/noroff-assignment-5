@@ -20,6 +20,7 @@ The [**Open Trivia Database JSON API**](https://opentdb.com/api_config.php) hand
 ## Table of Contents
 
 -  [Screenshots](#screenshots)
+-  [Diagram](#diagram)
 -  [Install](#install)
 -  [Maintainers](#maintainers)
 -  [Contributing](#contributing)
@@ -37,6 +38,12 @@ The [**Open Trivia Database JSON API**](https://opentdb.com/api_config.php) hand
 
 <p align="center">
 <img src="./public/ResultsPage.png">
+</p>
+
+## Diagram
+
+<p align="center">
+<img src="./public/QuizAppDiagram.png">
 </p>
 
 ## Install
