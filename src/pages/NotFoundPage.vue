@@ -2,8 +2,9 @@
 import { onMounted } from 'vue';
 import router from '../router';
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
+import { Routes } from '../enums/routes';
 
-onMounted(async () => setTimeout(() => router.push('/'), 2000));
+onMounted(async () => setTimeout(() => router.push(Routes.Home), 2000));
 </script>
 
 <template>

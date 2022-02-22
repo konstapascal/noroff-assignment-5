@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { Routes } from '../enums/routes';
 import router from '../router';
 import { useStore } from '../store';
 
@@ -7,7 +8,7 @@ const username = ref('');
 const store = useStore();
 
 const onInputChange = () => store.commit('setUsername', username.value);
-const onButtonClick = () => router.push('/questions');
+const onButtonClick = () => router.push(Routes.Questions);
 </script>
 
 <template>

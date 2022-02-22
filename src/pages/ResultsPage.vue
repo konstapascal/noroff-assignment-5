@@ -6,6 +6,7 @@ import { getUser, postUser, patchUser } from '../api/users';
 import QuizSummary from '../components/QuizSummary.vue';
 import AnswerSummary from '../components/AnswerSummary.vue';
 import scrollToTop from '../util/scrollToTop';
+import { Routes } from '../enums/routes';
 
 const store = useStore();
 
@@ -19,7 +20,7 @@ const keepsOldScore = ref(false);
 
 onMounted(async () => {
 	// If user has not chosen username
-	if (!username.value) return router.push('/');
+	if (!username.value) return router.push(Routes.Home);
 
 	try {
 		const user = await getUser(username.value);
@@ -53,7 +54,7 @@ function toQuestionsButtonClick() {
 
 	// Redirect to /questions
 	scrollToTop();
-	router.push('/questions');
+	router.push(Routes.Questions);
 }
 </script>
 
@@ -85,7 +86,7 @@ function toQuestionsButtonClick() {
 
 			<div class="flex flex-col items-center mt-12">
 				<button
-					@click="router.push('/')"
+					@click="router.push(Routes.Home)"
 					class="bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-sm transition-colors py-2 px-4"
 				>
 					Choose a new username

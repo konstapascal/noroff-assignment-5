@@ -7,6 +7,7 @@ import router from '../router';
 import Question from '../components/Question.vue';
 import scrollToTop from '../util/scrollToTop';
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
+import { Routes } from '../enums/routes';
 
 const store = useStore();
 
@@ -18,7 +19,7 @@ const isLoading = ref(true);
 
 onMounted(async () => {
 	// If user has not chosen an username, redirect to /
-	if (!username.value) return router.push('/');
+	if (!username.value) return router.push(Routes.Home);
 
 	const _questions: FormattedQuestion[] = await getQuestions();
 	isLoading.value = false;
@@ -28,7 +29,7 @@ onMounted(async () => {
 function onSubmitQuestionsClick() {
 	// Store user answers to store, redirect to /results
 	scrollToTop();
-	router.push('/results');
+	router.push(Routes.Results);
 }
 </script>
 
