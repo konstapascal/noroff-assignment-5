@@ -39,7 +39,7 @@ function onSubmitQuestionsClick() {
 		<p class="text-md mt-2 text-blue-400 italic">
 			Playing as <span class="font-semibold not-italic">{{ username }}</span>
 		</p>
-		<div class="max-w-md">
+		<div class="max-w-md mx-4 lg:mx-0">
 			<div class="mt-8 text-center" v-for="({ question, answers }, idx) in questions" :key="idx">
 				<Question :question="question" :questionIdx="idx" :answers="answers" />
 			</div>
