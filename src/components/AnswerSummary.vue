@@ -1,14 +1,23 @@
 <script setup lang="ts">
-// interface SummaryProps {
-// 	question: string;
-// 	userScore: number;
-// }
+import { computed } from 'vue';
+import { useStore } from '../store';
+import decodeHtmlEntities from '../util/decodeHtmlEntities';
 
-// defineProps<SummaryProps>();
+interface SummaryProps {
+	question: string;
+	questionIdx: number;
+	correct_answer: string;
+}
+
+defineProps<SummaryProps>();
+
+const store = useStore();
+
+const userAnswers = computed(() => store.state.userAnswers);
 </script>
 
 <template>
-	<!-- <p class="text-lg text-blue-100 font-semibold">{{ decodeHtmlEntities(question) }}</p>
+	<p class="text-lg text-blue-100 font-semibold">{{ decodeHtmlEntities(question) }}</p>
 	<div
 		class="bg-blue-700 border-2 border-blue-600 rounded-sm text-blue-100 mt-3 py-2 transition-colors"
 	>
@@ -19,11 +28,11 @@
 	</div>
 	<div
 		class="bg-gray-700 border-2 border-gray-600 rounded-sm mt-2 py-2 transition-colors"
-		:class="[correct_answer === userAnswers[idx] ? 'text-green-400' : 'text-red-400']"
+		:class="[correct_answer === userAnswers[questionIdx] ? 'text-green-400' : 'text-red-400']"
 	>
 		<p>
 			User answer:
-			<span class="font-semibold">{{ decodeHtmlEntities(userAnswers[idx]) }}</span>
+			<span class="font-semibold">{{ decodeHtmlEntities(userAnswers[questionIdx]) }}</span>
 		</p>
-	</div> -->
+	</div>
 </template>

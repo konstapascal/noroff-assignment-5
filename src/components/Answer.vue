@@ -39,7 +39,7 @@ function onAnswerChange() {
 		@change="onAnswerChange()"
 	/>
 	<label
-		class="block bg-gray-700 border-2 rounded-sm border-gray-600 py-2 peer-checked:bg-blue-600 peer-checked:border-blue-500 hover:cursor-pointer transition-colors"
+		class="block bg-gray-700 border-2 rounded-sm border-gray-600 py-2 peer-checked:bg-blue-600 peer-checked:border-blue-500 hover:cursor-pointer hover:bg-blue-600 hover:border-blue-500 active:bg-blue-700 transition-colors"
 		:for="answer"
 		>{{ decodeHtmlEntities(answer) }}</label
 	>

@@ -3,16 +3,15 @@ import { computed, onMounted, ref } from 'vue';
 import { useStore } from '../store';
 import router from '../router';
 import { getUser, postUser, patchUser } from '../api/users';
-import decodeHtmlEntities from '../util/decodeHtmlEntities';
 import QuizSummary from '../components/QuizSummary.vue';
 import AnswerSummary from '../components/AnswerSummary.vue';
+import scrollToTop from '../util/scrollToTop';
 
 const store = useStore();
 
 const username = computed(() => store.state.username);
 const userScore = computed(() => store.getters.userScore);
 const questions = computed(() => store.state.questions);
-const userAnswers = computed(() => store.state.userAnswers);
 
 const hasNewScore = ref(false);
 const hasNewHighScore = ref(false);
@@ -53,22 +52,23 @@ function toQuestionsButtonClick() {
 	store.commit('setUserAnswers', []);
 
 	// Redirect to /questions
+	scrollToTop();
 	router.push('/questions');
 }
 </script>
 
 <template>
 	<section class="container mx-auto flex my-20 flex-col items-center">
-		<h1 class="text-4xl font-bold">Results page</h1>
+		<h1 class="text-5xl font-bold">Results page</h1>
 		<div class="max-w-md">
-			<div class="flex flex-col mt-6">
-				<div class="text-sm text-center text-yellow-400 font-semibold" v-if="hasNewScore">
+			<div class="flex flex-col mt-6 text-blue-100">
+				<div class="text-sm text-center font-semibold" v-if="hasNewScore">
 					Added a new user to the database with the score of {{ userScore }}.
 				</div>
-				<div class="text-sm text-center text-yellow-400" v-if="hasNewHighScore">
+				<div class="text-sm text-center" v-if="hasNewHighScore">
 					You have a new highscore! Updated database score to {{ userScore }}.
 				</div>
-				<div class="text-sm text-center text-yellow-400" v-if="keepsOldScore">
+				<div class="text-sm text-center" v-if="keepsOldScore">
 					You did not earn more than your highest score, score not updated!
 				</div>
 			</div>
@@ -76,7 +76,11 @@ function toQuestionsButtonClick() {
 			<QuizSummary :username="username" :userScore="userScore" />
 
 			<div v-for="({ question, correct_answer }, idx) in questions" class="text-center mt-8">
-				<AnswerSummary />
+				<AnswerSummary
+					:question="question"
+					:questionIdx="idx"
+					:correct_answer="correct_answer"
+				/>
 			</div>
 
 			<div class="flex flex-col items-center mt-12">

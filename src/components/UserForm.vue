@@ -11,7 +11,7 @@ const onButtonClick = () => router.push('/questions');
 </script>
 
 <template>
-	<div class="mt-4 max-w-md text-center">
+	<div class="mt-6 max-w-md text-center">
 		<label class="text-lg font-semibold text-blue-100" for="username">Choose your username</label>
 		<input
 			@input="onInputChange()"

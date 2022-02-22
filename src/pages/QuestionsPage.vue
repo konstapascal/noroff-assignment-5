@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { FormattedQuestion } from '../interfaces/questions';
 import getQuestions from '../api/questions';
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, ref } from 'vue';
 import { useStore } from '../store';
 import router from '../router';
 import Question from '../components/Question.vue';
+import scrollToTop from '../util/scrollToTop';
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
 
 const store = useStore();
 
@@ -12,23 +14,27 @@ const username = computed(() => store.state.username);
 const questions = computed(() => store.state.questions);
 const allAnswersPicked = computed(() => store.state.allAnswersPicked);
 
+const isLoading = ref(true);
+
 onMounted(async () => {
 	// If user has not chosen an username, redirect to /
 	if (!username.value) return router.push('/');
 
 	const _questions: FormattedQuestion[] = await getQuestions();
+	isLoading.value = false;
 	store.commit('setQuestions', _questions);
 });
 
 function onSubmitQuestionsClick() {
 	// Store user answers to store, redirect to /results
+	scrollToTop();
 	router.push('/results');
 }
 </script>
 
 <template>
 	<section class="container mx-auto my-20 flex flex-col items-center">
-		<h1 class="text-4xl font-bold">Questions</h1>
+		<h1 class="text-5xl font-bold">Questions</h1>
 		<p class="text-md mt-2 text-blue-400 italic">
 			Playing as <span class="font-semibold not-italic">{{ username }}</span>
 		</p>
@@ -46,5 +52,6 @@ function onSubmitQuestionsClick() {
 				</button>
 			</div>
 		</div>
+		<PulseLoader color="#63A4F6" :loading="isLoading" />
 	</section>
 </template>
