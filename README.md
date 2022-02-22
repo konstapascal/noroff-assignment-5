@@ -1,11 +1,79 @@
-# Vue 3 + Typescript + Vite
+<h1 align="center">Noroff Assignment 5</h1>
+<p align="center">
+	<img src="https://isl.co/wp-content/uploads/2016/07/vue-logo.png" width="200">
+</p>
 
-This template should help get you started developing with Vue 3 and Typescript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+<img alt="Version" src="https://img.shields.io/badge/version-0.1-blue.svg?cacheSeconds=2592000" />
+<a href="#" target="_blank">
+<img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+</a>
 
-## Recommended IDE Setup
+Noroff assignment number 5, written by **Konstantinos Pascal** and **Darius Davidonis**.
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+The assignment is a quiz app written in **Vue** and styled with **Tailwind**. It makes use of 2 APIs for bringing in randomized questions and storing/updating of user scores.
 
-## Type Support For `.vue` Imports in TS
+The [**JSON Server API**](https://kp-noroff-assignment-api.herokuapp.com/trivia) is hosted on Heroku and handles the storage of new scores and update of high scores.
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.
+The [**Open Trivia Database JSON API**](https://opentdb.com/api_config.php) handles the retrieval of random questions for every play session.
+
+## Table of Contents
+
+-  [Screenshots](#screenshots)
+-  [Install](#install)
+-  [Maintainers](#maintainers)
+-  [Contributing](#contributing)
+-  [License](#license)
+
+## Screenshots
+
+<p align="center">
+<img src="./public/StartPage.png">
+</p>
+
+<p align="center">
+<img src="./public/QuestionsPage.png">
+</p>
+
+<p align="center">
+<img src="./public/ResultsPage.png">
+</p>
+
+## Install
+
+Clone the repository using:
+
+```
+git clone https://github.com/konstapascal/noroff-assignment-5.git
+```
+
+Go inside the cloned repository:
+
+```
+cd noroff-assignment-5
+```
+
+Install node module dependencies using:
+
+```
+npm install
+```
+
+Serve the web application locally using:
+
+```
+npm run dev
+```
+
+## Maintainers
+
+[@konstapascal](https://github.com/konstapascal)\
+[@dariusdav](https://github.com/dariusdav)
+
+## Contributing
+
+PRs accepted.
+
+## License
+
+MIT © 2022 Konstantinos Pascal &amp; Darius Davidonis
