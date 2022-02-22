@@ -4,7 +4,7 @@ import UserForm from '../components/UserForm.vue';
 
 <template>
 	<section class="container mx-auto my-20 flex flex-col items-center">
-		<h1 class="text-5xl font-bold">Vue Trivia App</h1>
+		<h1 class="text-5xl text-center font-bold">Vue Trivia App</h1>
 		<UserForm />
 	</section>
 </template>

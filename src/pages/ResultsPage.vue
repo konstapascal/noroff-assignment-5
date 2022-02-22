@@ -62,8 +62,8 @@ function onButtonClick(route: string) {
 
 <template>
 	<section class="container mx-auto flex my-20 flex-col items-center">
-		<h1 class="text-5xl font-bold">Results page</h1>
-		<div class="max-w-md">
+		<h1 class="text-5xl font-bold text-center">Results page</h1>
+		<div class="max-w-md mx-4 lg:mx-0">
 			<div class="flex flex-col mt-6 text-blue-100">
 				<div class="text-sm text-center font-semibold" v-if="hasNewScore">
 					Added a new user to the database with the score of {{ userScore }}.

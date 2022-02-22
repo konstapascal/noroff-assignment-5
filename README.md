@@ -19,12 +19,17 @@ The [**Open Trivia Database JSON API**](https://opentdb.com/api_config.php) hand
 
 ## Table of Contents
 
+-  [Live Demo](#live-demo)
 -  [Screenshots](#screenshots)
 -  [Diagram](#diagram)
 -  [Install](#install)
 -  [Maintainers](#maintainers)
 -  [Contributing](#contributing)
 -  [License](#license)
+
+## Live Demo
+
+**https://assignment-5-vue.herokuapp.com/**
 
 ## Screenshots
 
