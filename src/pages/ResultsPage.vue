@@ -35,6 +35,7 @@ onMounted(async () => {
 		if (userScore.value > user.score) {
 			patchUser(user.id, userScore.value);
 			hasNewHighScore.value = true;
+			return;
 		}
 
 		keepsOldScore.value = true;
@@ -43,7 +44,7 @@ onMounted(async () => {
 	}
 });
 
-function toQuestionsButtonClick() {
+function onButtonClick(route: string) {
 	// Reset state locally and globally
 	hasNewScore.value = false;
 	hasNewHighScore.value = false;
@@ -51,10 +52,11 @@ function toQuestionsButtonClick() {
 
 	store.commit('setAllAnswersPicked', false);
 	store.commit('setUserAnswers', []);
+	store.commit('setQuestions', []);
 
-	// Redirect to /questions
+	// Redirect to route
 	scrollToTop();
-	router.push(Routes.Questions);
+	router.push(route);
 }
 </script>
 
@@ -86,13 +88,13 @@ function toQuestionsButtonClick() {
 
 			<div class="flex flex-col items-center mt-12">
 				<button
-					@click="router.push(Routes.Home)"
+					@click="onButtonClick(Routes.Home)"
 					class="bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-sm transition-colors py-2 px-4"
 				>
 					Choose a new username
 				</button>
 				<button
-					@click="toQuestionsButtonClick()"
+					@click="onButtonClick(Routes.Questions)"
 					class="bg-blue-600 block hover:bg-blue-700 active:bg-blue-800 rounded-sm mt-2.5 transition-colors py-2 px-4"
 				>
 					Try new questions
